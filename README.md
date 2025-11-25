@@ -145,9 +145,29 @@ You should have all the files already. The lines below explain how the project w
 
 
 
-* create file `runtime.txt`
+~~* create file `runtime.txt`~~
+* uv python pin 3.12
+    * this generates a `.python-version` file
 
 
+* From VSCode commit to github
+
+
+* From the VSCode integrated terminal
+    * heroku login
+    * heroku create py-flashcards-2
+        * https://py-flashcards-2-89df499f643a.herokuapp.com/
+        * https://git.heroku.com/py-flashcards-2.git
+    * ~~git remote add heroku https://git.heroku.com/py-flashcards-2.git~~
+    * heroku auth:token
+        * Copy: HRKU-AAKXKs....
+    * git push heroku main
+        * When the dialog box popup enter ANY name and paste the token.
+        * Files are sent, the build process starts and the server is launched.
+    * heroku config:set FLASK_ENV=production
+    * heroku config:set FLASHCARDS_SECRET_KEY=blablabla
+    * heroku open
+    * This should work
 
 
 
@@ -168,19 +188,14 @@ You should have all the files already. The lines below explain how the project w
 
 
 
-* From VSCode commit to github
-* From the VSCode integrated terminal
-    * heroku login
-    * heroku create py-flashcards-2
-        * https://py-flashcards-41b349ab0591.herokuapp.com/
-        * https://git.heroku.com/py-flashcards.git
-        * are created for example
-    * git remote add heroku https://git.heroku.com/py-flashcards.git
-    * git push heroku main
-    * heroku config:set FLASK_ENV=production
-    * heroku config:set FLASHCARDS_SECRET_KEY=blablabla
-    * heroku open
-    * This should work
+
+
+
+
+
+
+
+
 
 # Workflow
 ## To run locally
