@@ -1,5 +1,6 @@
 /.git
 /.venv
+/md_buffer
 .env
 .gitignore
 mypy.ini

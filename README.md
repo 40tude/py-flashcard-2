@@ -88,7 +88,7 @@ TODO :
 
 
 
-## ATTENTION
+## <span style="color:orange">ATTENTION</span>
 * Heroku does not allow "_" in project name
 * Use "-" to name your project instead
 
@@ -116,14 +116,18 @@ TODO :
 
 ## How to
 
-You should have all the files already. The lines below explain how the project was initially set up.
+You should have all the files already. The lines below explain how the project was initially setup.
 
-* uv init py-flashcard-2 --python 3.12
-* cd py-flashcard-2
-* code .
-* create file mypy.ini
-* create file py-flashcards.py
-* uv add flask mypy markdown pygments python-dotenv
+### Setup
+
+```powershell
+uv init py-flashcard-2 --python 3.12
+cd py-flashcard-2
+uv add flask mypy markdown pygments python-dotenv
+code .
+```
+* create file `mypy.ini`
+* create file `py-flashcards.py`
 * create a file `.env` with
     ```
     FLASHCARDS_SECRET_KEY = ed0605f6-...
@@ -134,52 +138,53 @@ You should have all the files already. The lines below explain how the project w
 * update `.gitignore`
     * add a line with : `.env`
 
-* Run locally
-    * uv run py-flashcards.py
-    * if the .db file does not exist it will be created
-    * Browse: http://127.0.0.1:5000
+### Run locally
+* `uv run py-flashcards.py`
+* if the `flashcards.db file` does not exist it will be created
+* Browse: http://127.0.0.1:5000
 
-
-
-
+### Deploy to Heroku
 * create file `Procfile`
-    * Pay attention to :  py-flashcards:create_app()
+    * Pay attention to the line :  `py-flashcards:create_app()`
     * name of the Python file + ":" + entry_point()
-    * in py-flashcards.py take a look at create_app()
-        * Gunicorn uses the create_app() function to obtain the Flask application instance, and starts the WSGI server
+    * in `py-flashcards.py` take a look at `create_app()`
+        * Gunicorn uses the `create_app()` function to obtain the Flask application instance, and starts the WSGI server
 
-
-
-* uv pip compile pyproject.toml -o requirements.txt
-    * At the end of requirements.txt manually add the line "gunicorn==23.0.0"
+* `uv pip compile pyproject.toml -o requirements.txt`
+    * At the end of `requirements.txt` **manually** add the line `gunicorn==23.0.0`
     * I have to do this because I run WIN11 and I can't install gunicorn
     * gunicorn is only used in "production" on heroku
 
-
-* uv python pin 3.12
+* `uv python pin 3.12`
     * this generates a `.python-version` file
 
 * create file `.slugignore`
     * avoid to send unnecessary files to heroku
 
-
 * Commit to github
 
-
 * From the VSCode integrated terminal
-    * heroku login
-    * heroku create py-flashcards-2
-        * https://py-flashcards-2-89df499f643a.herokuapp.com/
-        * https://git.heroku.com/py-flashcards-2.git
-    * heroku auth:token
-        * Copy the token: HRKU-AAKXKs....
-    * git push heroku main
-        * When the dialog box appears enter ANY name and paste the token.
-        * Files are sent, the build process starts and the server is launched.
-    * heroku config:set FLASK_ENV=production
-    * heroku config:set FLASHCARDS_SECRET_KEY=blablabla
-    * heroku open
-    * This should work
+
+    ```powershell
+    heroku login
+    heroku create py-flashcards-2
+    # https://py-flashcards-2-89df499f643a.herokuapp.com/
+    # https://git.heroku.com/py-flashcards-2.git
+    heroku auth:token
+    # Copy the token: HRKU-AAKXKs....
+    git push heroku main
+    # When the dialog box appears enter ANY name and paste the token.
+    # Files are sent, the build process starts and the server is launched.
+    heroku config:set FLASK_ENV=production
+    heroku config:set FLASHCARDS_SECRET_KEY=blablabla
+    heroku open
+    ```
+This should work
+
+<div align="center">
+<img src="./assets/img00.webp" alt="" width="" loading="lazy"/><br/>
+<span>Content can be any language (see static/md/*.dm).</span>
+</div>
 
 
 
@@ -201,26 +206,29 @@ You should have all the files already. The lines below explain how the project w
 
 
 
-# Workflow
-## To run locally
+
+## Workflow To run locally
 * Modify files etc.
 * Commit on github from VSCode
-* Strike F5 while ``py-flashcards-2.py`` is open
+* Press F5 while ``py-flashcards-2.py`` is open
 * Open ``http://127.0.0.1:5000/`` with your browser
 
 ### Note
 * Visit ``http://127.0.0.1:5000/search`` and type in `data structures`
 * You will then **ONLY** get cards containing ``data`` and ``structures``
 
-## To deploy on Heroku
+
+
+
+## Workflow To deploy on Heroku
 * Modify files etc.
 * Commit on github from VSCode
-* ``git push heroku main``
+* Then ``git push heroku main``
 * Type ``heroku open`` in the terminal (or visit the app web page)
 
 
 
-# Q&A
+## Q&A
 
 ---
 * Q : How to check gunicorn is serving the app on Heroku?
@@ -287,7 +295,7 @@ This is the expected answer with a link to the ``./assets/dummy.png``
 
 
 
-# About contributions
+## About contributions
 This project was developed for personal and educational purposes. Feel free to explore and use it to enhance your own learning in machine learning.
 
 Given the nature of the project, external contributions are not actively sought or encouraged. However, constructive feedback aimed at improving the project (in terms of speed, accuracy, comprehensiveness, etc.) is welcome. Please note that this project was created as part of a certification process, and it is unlikely to be maintained after the final presentation.
