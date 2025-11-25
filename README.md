@@ -88,27 +88,33 @@ TODO :
 
 
 
-### ATTENTION
+## ATTENTION
 * Heroku does not allow "_" in project name
 * Use "-" to name your project instead
+
+
+
+
 
 ## Note
 * I use WIN11 (while Heroku runs Linux) but most of the information are platform independent
 * I use uv
 
 
+
+
 ## Why a V2 ?
 * I want to translate the project in Rust
 * I no longer use `conda` but `uv` instead
-* I want to remove `secrets.ps1` and use `.env`
-* Before the translation I want to make sure
+* I want to remove `secrets.ps1` and use `.env` instead
+* Before the translation in Rust I want to make sure:
     * I can restart the project
     * It works
-    * I know what I'm talking about (I forget everything...)
+    * I know what I'm talking about (I forget almost everything...)
 
 
 
-# How to
+## How to
 
 You should have all the files already. The lines below explain how the project was initially set up.
 
@@ -118,12 +124,12 @@ You should have all the files already. The lines below explain how the project w
 * create file mypy.ini
 * create file py-flashcards.py
 * uv add flask mypy markdown pygments python-dotenv
-* create a file `.env` similar to
+* create a file `.env` with
     ```
     FLASHCARDS_SECRET_KEY = ed0605f6-...
     ```
-* make sure `templates/` exists
-* If `flashcards.db` does NOT exists make sure `static/` exists
+* make sure `templates/` directory exists
+* If `flashcards.db` does NOT exists make sure `static/` directory exists
 
 * update `.gitignore`
     * add a line with : `.env`
@@ -142,20 +148,22 @@ You should have all the files already. The lines below explain how the project w
     * in py-flashcards.py take a look at create_app()
         * Gunicorn uses the create_app() function to obtain the Flask application instance, and starts the WSGI server
 
+
+
 * uv pip compile pyproject.toml -o requirements.txt
     * At the end of requirements.txt manually add the line "gunicorn==23.0.0"
     * I have to do this because I run WIN11 and I can't install gunicorn
     * gunicorn is only used in "production" on heroku
 
 
-
-
-~~* create file `runtime.txt`~~
 * uv python pin 3.12
     * this generates a `.python-version` file
 
+* create file `.slugignore`
+    * avoid to send unnecessary files to heroku
 
-* From VSCode commit to github
+
+* Commit to github
 
 
 * From the VSCode integrated terminal
@@ -163,11 +171,10 @@ You should have all the files already. The lines below explain how the project w
     * heroku create py-flashcards-2
         * https://py-flashcards-2-89df499f643a.herokuapp.com/
         * https://git.heroku.com/py-flashcards-2.git
-    * ~~git remote add heroku https://git.heroku.com/py-flashcards-2.git~~
     * heroku auth:token
-        * Copy: HRKU-AAKXKs....
+        * Copy the token: HRKU-AAKXKs....
     * git push heroku main
-        * When the dialog box popup enter ANY name and paste the token.
+        * When the dialog box appears enter ANY name and paste the token.
         * Files are sent, the build process starts and the server is launched.
     * heroku config:set FLASK_ENV=production
     * heroku config:set FLASHCARDS_SECRET_KEY=blablabla
@@ -181,12 +188,6 @@ You should have all the files already. The lines below explain how the project w
 
 
 
-* conda list -e > ./assets/requirements_conda.txt
-* pip list --format=freeze > requirements.txt
-    *
-    * If you run Linux
-        * conda install gunicorn -y
-        * pip list --format=freeze > requirements.txt
 
 
 
@@ -202,17 +203,10 @@ You should have all the files already. The lines below explain how the project w
 
 # Workflow
 ## To run locally
-* Open a terminal in VSCode and run ``./secrets.ps1`` once
-    * You can type ``ls env:FLASH*`` to double check
 * Modify files etc.
-* Optional - Commit on github from VSCode
-* Strike F5 while ``py-flashcards.py`` is open
+* Commit on github from VSCode
+* Strike F5 while ``py-flashcards-2.py`` is open
 * Open ``http://127.0.0.1:5000/`` with your browser
-* If you can't open the page with the browser
-    1. Stop the app (CTRL+C)
-    1. The Python Debug Console should be opened
-    1. Run ``./secrets.ps1`` once in the **Python Debug Console**
-    1. Click in ``py-flashcards.py``, F5 then ``http://127.0.0.1:5000/``
 
 ### Note
 * Visit ``http://127.0.0.1:5000/search`` and type in `data structures`
@@ -222,7 +216,9 @@ You should have all the files already. The lines below explain how the project w
 * Modify files etc.
 * Commit on github from VSCode
 * ``git push heroku main``
-* type ``heroku open`` in the terminal (or visit the app web page)
+* Type ``heroku open`` in the terminal (or visit the app web page)
+
+
 
 # Q&A
 
