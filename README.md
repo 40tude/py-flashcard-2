@@ -142,6 +142,11 @@ You should have all the files already. The lines below explain how the project w
     * in py-flashcards.py take a look at create_app()
         * Gunicorn uses the create_app() function to obtain the Flask application instance, and starts the WSGI server
 
+* uv pip compile pyproject.toml -o requirements.txt
+    * At the end of requirements.txt manually add the line "gunicorn==23.0.0"
+    * I have to do this because I run WIN11 and I can't install gunicorn
+    * gunicorn is only used in "production" on heroku
+
 
 
 
@@ -178,9 +183,7 @@ You should have all the files already. The lines below explain how the project w
 
 * conda list -e > ./assets/requirements_conda.txt
 * pip list --format=freeze > requirements.txt
-    * At the end of requirements.txt manually add the line "gunicorn==23.0.0"
-    * I have to do that because I run WIN11 and I can't install gunicorn
-    * gunicorn is only used in "production" on heroku
+    *
     * If you run Linux
         * conda install gunicorn -y
         * pip list --format=freeze > requirements.txt
