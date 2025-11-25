@@ -1,5 +1,10 @@
-# First, read the readme.md
+# First, read the README.md file
 # I can't do it for you :-)
+
+# Load environment variables FIRST
+from dotenv import load_dotenv
+load_dotenv()
+
 
 import os
 import re
@@ -325,7 +330,8 @@ def create_app() -> Flask:
     # If you run the app locally you must run ./secrets.ps1 first (see above)
     # In production on Heroku FLASHCARDS_SECRET_KEY must have been set manually (see readme.md)
     # Without session key, Flask does not allow the app to set or access the session dictionary
-    app.secret_key = os.environ.get("FLASHCARDS_SECRET_KEY")
+    # app.secret_key = os.environ.get("FLASHCARDS_SECRET_KEY")
+    app.secret_key = os.environ["FLASHCARDS_SECRET_KEY"]
 
     # app.config["SESSION_COOKIE_HTTPONLY"] = True  # Empêche l'accès au cookie via JavaScript
     # app.config["SESSION_COOKIE_SECURE"] = False  # Assure que le cookie est accessible sur HTTP

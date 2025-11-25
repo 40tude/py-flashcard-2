@@ -71,6 +71,21 @@ TODO :
 -->
 
 
+<!--
+# Retrouver la taille du répertoire projet
+# Github 5GB max
+# (Get-ChildItem . -Recurse | Measure-Object -Property Length -sum).sum/1GB
+
+# Retrouver les fichiers avec une certaine extension
+# Get-ChildItem -Path . -Directory -Recurse -Force | Where-Object { $_.Name -eq ".aws" }
+
+# large files Size > 100MB (warning à 50MB)
+# pas moyen de spécifier la taille dans .gitignore
+# Get-ChildItem ./ -recurse | where-object {$_.length -gt 100000000} | Sort-Object length | ft fullname, length -auto
+
+ -->
+
+
 
 
 ### ATTENTION
@@ -82,36 +97,65 @@ TODO :
 * I use uv
 
 
-## Why V2 ?
-* I want to remove `secrets.ps1`
+## Why a V2 ?
+* I want to translate the project in Rust
 * I no longer use `conda` but `uv` instead
-* Before to translate everything in Rust I want to make sure it works and that I'm back on the project (I forget everything...)
-*
+* I want to remove `secrets.ps1` and use `.env`
+* Before the translation I want to make sure
+    * I can restart the project
+    * It works
+    * I know what I'm talking about (I forget everything...)
 
 
 
 # How to
+
 You should have all the files already. The lines below explain how the project was initially set up.
-* conda create --name py-flashcards python=3.12 -y
-* conda activate py-flashcards
-* create directory py-flashcards
-* cd ./py-flashcards
+
+* uv init py-flashcard-2 --python 3.12
+* cd py-flashcard-2
 * code .
 * create file mypy.ini
 * create file py-flashcards.py
-* conda install flask mypy markdown pygments -y
-* create a secrets.ps1 similar to
+* uv add flask mypy markdown pygments python-dotenv
+* create a file `.env` similar to
+    ```
+    FLASHCARDS_SECRET_KEY = ed0605f6-...
+    ```
+* make sure `templates/` exists
+* If `flashcards.db` does NOT exists make sure `static/` exists
 
-```
-$env:FLASHCARDS_SECRET_KEY = "blablabla"
-```
-* create .gitignore
-    * at least, add a line with : secrets.ps1
-* Open a terminal in VSCode (CTRL + ù)
-    * ./secrets.ps1
-* Strike F5 in VScode
-    * The app should be running locally
-    * CTRL+C
+* update `.gitignore`
+    * add a line with : `.env`
+
+* Run locally
+    * uv run py-flashcards.py
+    * if the .db file does not exist it will be created
+    * Browse: http://127.0.0.1:5000
+
+
+
+
+* create file `Procfile`
+    * Pay attention to :  py-flashcards:create_app()
+    * name of the Python file + ":" + entry_point()
+    * in py-flashcards.py take a look at create_app()
+        * Gunicorn uses the create_app() function to obtain the Flask application instance, and starts the WSGI server
+
+
+
+
+* create file `runtime.txt`
+
+
+
+
+
+
+
+
+
+
 * conda list -e > ./assets/requirements_conda.txt
 * pip list --format=freeze > requirements.txt
     * At the end of requirements.txt manually add the line "gunicorn==23.0.0"
@@ -120,16 +164,14 @@ $env:FLASHCARDS_SECRET_KEY = "blablabla"
     * If you run Linux
         * conda install gunicorn -y
         * pip list --format=freeze > requirements.txt
-* create file Procfile
-    * Pay attention to :  py-flashcards:create_app()
-    * name of the Python file + ":" + entry_point()
-    * in py-flashcards.py take a look at create_app()
-        * Gunicorn uses the create_app() function to obtain the Flask application instance, and starts the WSGI server
-* create file runtime.txt
+
+
+
+
 * From VSCode commit to github
 * From the VSCode integrated terminal
     * heroku login
-    * heroku create py-flashcards
+    * heroku create py-flashcards-2
         * https://py-flashcards-41b349ab0591.herokuapp.com/
         * https://git.heroku.com/py-flashcards.git
         * are created for example
