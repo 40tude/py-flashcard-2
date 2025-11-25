@@ -1,6 +1,5 @@
 /.git
 /.venv
-/static
 .env
 .gitignore
 mypy.ini
